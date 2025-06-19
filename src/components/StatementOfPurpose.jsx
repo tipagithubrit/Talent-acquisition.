@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { submitApplication } from '../utils/api';
+import SuccessPopup from './Popup';
 
 const StatementOfPurpose = ({ formData, setFormData, nextStep }) => {
   const questions = [
@@ -22,12 +22,14 @@ const StatementOfPurpose = ({ formData, setFormData, nextStep }) => {
   const [answers, setAnswers] = useState(formData.statementOfPurpose || {
     q1: "",
     q2: "",
-    q3: ""
+    q3: "",
   });
 
   const [isValid, setIsValid] = useState(false);
+  const [showPopup, setShowPopup] = useState(false); // ✅ Popup state
 
-  const wordCount = (text) => (text || "").trim().split(/\s+/).filter(Boolean).length;
+  const wordCount = (text) =>
+    (text || "").trim().split(/\s+/).filter(Boolean).length;
 
   useEffect(() => {
     const allAnswered = questions.every(
@@ -55,13 +57,16 @@ const StatementOfPurpose = ({ formData, setFormData, nextStep }) => {
         q3: [answers.q3],
       },
     });
-    nextStep();
+    setShowPopup(true); // ✅ Show popup
   };
 
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    nextStep(); // ✅ Move to InterviewAvailability step
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      
       <div className="py-32 px-8">
         <p className="text-sm text-blue-600 mb-6">
           Please answer all the following questions. Each answer must be under 300 words.
@@ -89,13 +94,23 @@ const StatementOfPurpose = ({ formData, setFormData, nextStep }) => {
           <button
             onClick={handleNext}
             disabled={!isValid}
-            className={`px-6 py-2 rounded text-white ${isValid ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"
+            className={`px-6 py-2 rounded text-white ${isValid
+              ? "bg-blue-600 hover:bg-blue-700"
+              : "bg-gray-400 cursor-not-allowed"
               }`}
           >
             NEXT
           </button>
         </div>
       </div>
+
+      {/* ✅ Success Popup */}
+      {showPopup && (
+        <SuccessPopup
+          message="Statement of Purpose submitted!"
+          onClose={handlePopupClose}
+        />
+      )}
     </div>
   );
 };

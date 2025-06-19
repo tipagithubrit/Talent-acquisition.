@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import SuccessPopup from './Popup';
 
 const DocumentCollection = ({ formData, setFormData, nextStep }) => {
   const [docs, setDocs] = useState(formData.documents || {});
   const [isValid, setIsValid] = useState(false);
   const [uploadingField, setUploadingField] = useState("");
+  const [showPopup, setShowPopup] = useState(false); 
 
-  // Define required fields only
   const requiredFields = [
     "10th Marksheet",
     "12th Marksheet",
@@ -15,7 +16,6 @@ const DocumentCollection = ({ formData, setFormData, nextStep }) => {
     "Bank Statement"
   ];
 
-  // All file fields (include optional ones too)
   const allFileFields = [
     "10th Marksheet",
     "12th Marksheet",
@@ -42,13 +42,13 @@ const DocumentCollection = ({ formData, setFormData, nextStep }) => {
 
     setUploadingField(name);
 
-    const formData = new FormData();
-    formData.append("file", file);
+    const formDataUpload = new FormData();
+    formDataUpload.append("file", file);
 
     try {
       const response = await fetch("https://assessments-xhy0.onrender.com/upload-file", {
         method: "POST",
-        body: formData,
+        body: formDataUpload,
       });
 
       const result = await response.json();
@@ -75,15 +75,20 @@ const DocumentCollection = ({ formData, setFormData, nextStep }) => {
   const handleNext = () => {
     setFormData({
       ...formData,
-      documents: docs
+      documents: docs,
     });
-    nextStep();
+    setShowPopup(true); // ✅ Show popup
+  };
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    nextStep(); // ✅ Go to next section after closing popup
   };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <div className="h-28" />
-      
+
       <div className="bg-white p-8 shadow-sm w-full max-w-4xl mx-auto">
         <h2 className="text-xl font-semibold mb-2">Upload Your Documents</h2>
         <p className="text-sm text-blue-600 mb-6">Only specific documents are mandatory</p>
@@ -121,6 +126,11 @@ const DocumentCollection = ({ formData, setFormData, nextStep }) => {
           </button>
         </div>
       </div>
+
+      {/* ✅ Success Popup */}
+      {showPopup && (
+        <SuccessPopup message="Documents uploaded successfully!" onClose={handlePopupClose} />
+      )}
     </div>
   );
 };

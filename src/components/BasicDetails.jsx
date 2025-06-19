@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { submitApplication } from '../utils/api';
+import SuccessPopup from './Popup';
 
 const BasicDetails = ({ formData, setFormData, nextStep }) => {
   const [name, setName] = useState(formData.basicDetails.name || '');
@@ -7,7 +8,7 @@ const BasicDetails = ({ formData, setFormData, nextStep }) => {
   const [dob, setDob] = useState(formData.basicDetails.dateOfBirth || '');
   const [contact, setContact] = useState(formData.basicDetails.mobileNumber || '');
   const [isValid, setIsValid] = useState(false);
-
+  const [showPopup, setShowPopup] = useState(false);
   useEffect(() => {
     const validEmail = /\S+@\S+\.\S+/.test(email);
     const validContact = /^\d{10}$/.test(contact);
@@ -54,11 +55,16 @@ const BasicDetails = ({ formData, setFormData, nextStep }) => {
       const response = await submitApplication(payload);
       console.log('Submitted successfully:', response);
       setFormData({ ...formData, basicDetails });
-      nextStep();
+      setShowPopup(true); // ✅ Show popup on success
     } catch (err) {
       console.error('Submission failed:', err.response?.data || err.message);
       alert('Error submitting application.');
     }
+  };
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    nextStep(); // ✅ Proceed to next step only after popup is closed
   };
 
   return (
@@ -129,6 +135,11 @@ const BasicDetails = ({ formData, setFormData, nextStep }) => {
           </button>
         </div>
       </div>
+
+
+      {showPopup && (
+        <SuccessPopup message="Basic Details Submitted Successfully!" onClose={handlePopupClose} />
+      )}
     </div>
   );
 };
