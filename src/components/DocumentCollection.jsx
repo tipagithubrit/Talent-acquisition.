@@ -82,27 +82,8 @@ const DocumentCollection = ({ formData, setFormData, nextStep }) => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
-      {/* Top bar */}
-      <div className="bg-white py-4 px-8 shadow fixed top-0 left-0 w-full z-10">
-        <h1 className="text-xl font-semibold mb-2">Document Collection</h1>
-        <div className="flex items-center space-x-8 overflow-x-auto">
-          <div className="flex items-center space-x-2 text-blue-600 font-medium">
-            <div className="w-4 h-4 rounded-full bg-blue-600" />
-            <span>Form Selection</span>
-          </div>
-          <div className="w-4 h-0.5 bg-gray-300 flex-grow" />
-          <div className="text-gray-400">Set up</div>
-          <div className="w-4 h-0.5 bg-gray-300 flex-grow" />
-          <div className="text-gray-400">Form Creation</div>
-          <div className="w-4 h-0.5 bg-gray-300 flex-grow" />
-          <div className="text-gray-400">Review</div>
-        </div>
-      </div>
-
-      {/* Spacer */}
       <div className="h-28" />
-
-      {/* Form content */}
+      
       <div className="bg-white p-8 shadow-sm w-full max-w-4xl mx-auto">
         <h2 className="text-xl font-semibold mb-2">Upload Your Documents</h2>
         <p className="text-sm text-blue-600 mb-6">Only specific documents are mandatory</p>

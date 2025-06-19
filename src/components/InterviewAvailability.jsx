@@ -20,49 +20,34 @@ const InterviewAvailability = ({ formData, setFormData, resetToFirstStep }) => {
     const finalData = {
       ...formData,
       interviewAvailability: {
-        ...form
+        ...form,
       },
       submittedAt: new Date().toISOString(),
     };
 
     try {
       const response = await submitApplication(finalData);
-      console.log("✅ Submitted:", response);
-      alert("🎉 Your application has been submitted successfully!");
+      console.log("Submitted:", response);
+      alert("Your application has been submitted successfully!");
 
-      setFormData({}); // Clear all form data
-      resetToFirstStep(); // Go to first page
+      setFormData({});
+      resetToFirstStep();
     } catch (err) {
-      console.error("❌ Submission error:", err);
+      console.error("Submission error:", err);
       alert("Something went wrong. Please try again.");
     }
   };
 
   return (
-    <>
-      <div className="bg-white py-4 px-8 shadow fixed top-0 left-0 w-full z-10">
-        <h1 className="text-xl font-semibold mb-2">Interview Availability</h1>
-        <div className="flex items-center space-x-8">
-          <div className="flex items-center space-x-2 text-blue-600 font-medium">
-            <div className="w-4 h-4 rounded-full bg-blue-600" />
-            <span>Form Selection</span>
-          </div>
-          <div className="w-4 h-0.5 bg-gray-300 flex-grow" />
-          <div className="text-gray-400">Set up</div>
-          <div className="w-4 h-0.5 bg-gray-300 flex-grow" />
-          <div className="text-gray-400">Form Creation</div>
-          <div className="w-4 h-0.5 bg-gray-300 flex-grow" />
-          <div className="text-gray-400">Review</div>
-        </div>
-      </div>
+    <div className="flex flex-col min-h-screen bg-gray-100">
+      <div className="flex-1 p-8 overflow-auto">
+        <div className="bg-white rounded-xl shadow-md p-8 max-w-3xl mx-auto">
+          <h2 className="text-lg font-semibold mb-1">Interview Form</h2>
+          <p className="text-sm text-blue-500 mb-6">Provide your availability</p>
 
-      <div className="flex flex-col min-h-screen bg-gray-100">
-        <div className="flex-1 p-8 overflow-auto">
-          <div className="bg-white rounded-xl shadow-md p-8 max-w-3xl mx-auto">
-            <h2 className="text-lg font-semibold mb-1">Interview Form</h2>
-            <p className="text-sm text-blue-500 mb-6">Provide your availability</p>
-
-            <div className="space-y-6">
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium mb-1">1. Email</label>
               <input
                 type="email"
                 name="email"
@@ -72,7 +57,10 @@ const InterviewAvailability = ({ formData, setFormData, resetToFirstStep }) => {
                 className="w-full border p-2 rounded"
                 required
               />
+            </div>
 
+            <div>
+              <label className="block text-sm font-medium mb-1">2. Location</label>
               <input
                 type="text"
                 name="location"
@@ -81,7 +69,10 @@ const InterviewAvailability = ({ formData, setFormData, resetToFirstStep }) => {
                 placeholder="Location"
                 className="w-full border p-2 rounded"
               />
+            </div>
 
+            <div>
+              <label className="block text-sm font-medium mb-1">3. Interview Date</label>
               <input
                 type="date"
                 name="interviewDate"
@@ -89,7 +80,10 @@ const InterviewAvailability = ({ formData, setFormData, resetToFirstStep }) => {
                 onChange={handleChange}
                 className="w-full border p-2 rounded"
               />
+            </div>
 
+            <div>
+              <label className="block text-sm font-medium mb-1">4. Interview Time</label>
               <input
                 type="time"
                 name="interviewTime"
@@ -97,7 +91,10 @@ const InterviewAvailability = ({ formData, setFormData, resetToFirstStep }) => {
                 onChange={handleChange}
                 className="w-full border p-2 rounded"
               />
+            </div>
 
+            <div>
+              <label className="block text-sm font-medium mb-1">5. Time Zone</label>
               <select
                 name="timeZone"
                 value={form.timeZone}
@@ -109,7 +106,10 @@ const InterviewAvailability = ({ formData, setFormData, resetToFirstStep }) => {
                 <option>GMT +1:00 (UK)</option>
                 <option>GMT -5:00 (US Eastern)</option>
               </select>
+            </div>
 
+            <div>
+              <label className="block text-sm font-medium mb-1">6. Interview Medium</label>
               <select
                 name="interviewMedium"
                 value={form.interviewMedium}
@@ -123,19 +123,19 @@ const InterviewAvailability = ({ formData, setFormData, resetToFirstStep }) => {
                 <option>In-person</option>
               </select>
             </div>
+          </div>
 
-            <div className="flex justify-end mt-8">
-              <button
-                onClick={handleSubmit}
-                className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
-              >
-                Submit Application
-              </button>
-            </div>
+          <div className="flex justify-end mt-8">
+            <button
+              onClick={handleSubmit}
+              className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+            >
+              Submit Application
+            </button>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

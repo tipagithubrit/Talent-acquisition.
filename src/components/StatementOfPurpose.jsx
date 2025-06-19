@@ -61,22 +61,7 @@ const StatementOfPurpose = ({ formData, setFormData, nextStep }) => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <div className="bg-white py-4 px-8 shadow fixed top-0 left-0 w-full z-10">
-        <h1 className="text-xl font-semibold mb-2">Statement of Purpose</h1>
-        <div className="flex items-center space-x-8">
-          <div className="flex items-center space-x-2 text-blue-600 font-medium">
-            <div className="w-4 h-4 rounded-full bg-blue-600" />
-            <span>Form Selection</span>
-          </div>
-          <div className="w-4 h-0.5 bg-gray-300 flex-grow" />
-          <div className="text-gray-400">Set up</div>
-          <div className="w-4 h-0.5 bg-gray-300 flex-grow" />
-          <div className="text-gray-400">Form Creation</div>
-          <div className="w-4 h-0.5 bg-gray-300 flex-grow" />
-          <div className="text-gray-400">Review</div>
-        </div>
-      </div>
-
+      
       <div className="py-32 px-8">
         <p className="text-sm text-blue-600 mb-6">
           Please answer all the following questions. Each answer must be under 300 words.
